@@ -234,7 +234,7 @@ export default function LoginPage() {
                   {isLoading ? (
                     <span className="flex items-center gap-2">
                       <span className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                      로그인 중...
+                      로딩 중
                     </span>
                   ) : (
                     '로그인'
