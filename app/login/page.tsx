@@ -9,7 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Sparkles, CheckCircle2, Brain, Zap } from 'lucide-react';
-import { createClient } from '@/lib/supabase/client';
+import { createSupabaseClient } from '@/lib/supabase/client';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -22,7 +22,7 @@ export default function LoginPage() {
   // 이미 로그인된 경우 메인 페이지로 리다이렉트
   useEffect(() => {
     const checkAuth = async () => {
-      const supabase = createClient();
+      const supabase = createSupabaseClient();
       const { data: { session } } = await supabase.auth.getSession();
 
       if (session) {
@@ -88,7 +88,7 @@ export default function LoginPage() {
     setIsLoading(true);
 
     try {
-      const supabase = createClient();
+      const supabase = createSupabaseClient();
 
       // Supabase 로그인
       const { data, error: signInError } = await supabase.auth.signInWithPassword({

@@ -10,7 +10,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Sparkles, CheckCircle2, Brain, Zap, Mail } from 'lucide-react';
-import { createClient } from '@/lib/supabase/client';
+import { createSupabaseClient } from '@/lib/supabase/client';
 
 export default function SignupPage() {
   const router = useRouter();
@@ -62,7 +62,7 @@ export default function SignupPage() {
     setIsLoading(true);
 
     try {
-      const supabase = createClient();
+      const supabase = createSupabaseClient();
       
       // Supabase 회원가입
       const { data, error: signUpError } = await supabase.auth.signUp({
