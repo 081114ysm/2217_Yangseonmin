@@ -338,7 +338,7 @@ export default function Home() {
     }
 
     try {
-      const supabase = createClient();
+      const supabase = createSupabaseClient();
       const { error } = await supabase
         .from('todos')
         .delete()
