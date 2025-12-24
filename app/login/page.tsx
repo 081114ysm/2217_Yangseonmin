@@ -10,6 +10,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Sparkles, CheckCircle2, Brain, Zap } from 'lucide-react';
 import { createSupabaseClient } from '@/lib/supabase/client';
+import { toast } from 'sonner';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -86,6 +87,7 @@ export default function LoginPage() {
     }
 
     setIsLoading(true);
+    const loadingToastId = toast.loading('로딩 중');
 
     try {
       const supabase = createSupabaseClient();
@@ -97,6 +99,7 @@ export default function LoginPage() {
       });
 
       if (signInError) {
+        toast.dismiss(loadingToastId);
         // 사용자 친화적인 에러 메시지
         if (signInError.message.includes('Invalid login credentials')) {
           setError('이메일 또는 비밀번호가 올바르지 않습니다.');
@@ -107,19 +110,22 @@ export default function LoginPage() {
         } else {
           setError('로그인에 실패했습니다. 다시 시도해주세요.');
         }
+        setIsLoading(false);
         return;
       }
 
       // 로그인 성공
       if (data.session) {
+        toast.dismiss(loadingToastId);
+        toast.success('로그인 성공');
         // 메인 페이지로 이동
         router.push('/');
         router.refresh(); // 서버 컴포넌트 새로고침
       }
     } catch (err) {
+      toast.dismiss(loadingToastId);
       console.error('Login error:', err);
       setError('예상치 못한 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
-    } finally {
       setIsLoading(false);
     }
   };
