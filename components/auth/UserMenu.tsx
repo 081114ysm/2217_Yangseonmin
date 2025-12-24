@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { LogOut, User as UserIcon } from 'lucide-react';
-import { createClient } from '@/lib/supabase/client';
+import { createSupabaseClient } from '@/lib/supabase/client';
 import type { User } from '@supabase/supabase-js';
 
 export function UserMenu() {
@@ -22,7 +22,7 @@ export function UserMenu() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const supabase = createClient();
+    const supabase = createSupabaseClient();
 
     // 현재 사용자 가져오기
     supabase.auth.getUser().then(({ data: { user } }) => {
@@ -42,7 +42,7 @@ export function UserMenu() {
   const handleLogout = async () => {
     setIsLoading(true);
     try {
-      const supabase = createClient();
+      const supabase = createSupabaseClient();
       
       const { error } = await supabase.auth.signOut();
       
