@@ -31,7 +31,7 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { TodoList, TodoForm, Todo, TodoFormData } from '@/components/todo';
 import { UserMenu } from '@/components/auth';
-import { createClient } from '@/lib/supabase/client';
+import { createSupabaseClient } from '@/lib/supabase/client';
 import {
   Search,
   Plus,
@@ -91,7 +91,7 @@ export default function Home() {
     
     try {
       setIsLoading(true);
-      const supabase = createClient();
+      const supabase = createSupabaseClient();
       const { data, error } = await supabase
         .from('todos')
         .select('*')
@@ -116,7 +116,7 @@ export default function Home() {
   // 인증 상태 확인 및 리다이렉트
   useEffect(() => {
     const checkAuth = async () => {
-      const supabase = createClient();
+      const supabase = createSupabaseClient();
       const { data: { session } } = await supabase.auth.getSession();
 
       if (!session) {
@@ -224,7 +224,7 @@ export default function Home() {
     }
 
     try {
-      const supabase = createClient();
+      const supabase = createSupabaseClient();
       const { data: newTodo, error } = await supabase
         .from('todos')
         .insert({
@@ -271,7 +271,7 @@ export default function Home() {
     }
 
     try {
-      const supabase = createClient();
+      const supabase = createSupabaseClient();
       const { error } = await supabase
         .from('todos')
         .update({
@@ -309,7 +309,7 @@ export default function Home() {
     }
 
     try {
-      const supabase = createClient();
+      const supabase = createSupabaseClient();
       const { error } = await supabase
         .from('todos')
         .update({ completed })
